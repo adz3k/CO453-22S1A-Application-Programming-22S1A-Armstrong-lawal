@@ -1,0 +1,113 @@
+using System;
+using ConsoleAppProject.App01;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
+namespace ConsoleApp.Tests
+{
+    [TestClass]
+    public class DistanceConverterTest
+    {
+        private readonly DistanceConverter converter = new DistanceConverter();
+
+        [TestMethod]
+        public void TestMilesToFeet()
+        {
+            // 1 mile = 5280 feet
+            converter.FromUnit = "miles";
+            converter.ToUnit = "feet";
+            converter.FromDistance = 1;
+            converter.CalculateDistance();
+            double expected = 5280;
+            double actual = converter.ToDistance;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestFeetToMiles()
+        {
+            // 5280 feet = 1 mile
+            converter.FromUnit = "feet";
+            converter.ToUnit = "miles";
+            converter.FromDistance = 5280;
+            converter.CalculateDistance();
+            double expected = 1;
+            double actual = converter.ToDistance;
+            Assert.AreEqual(expected, actual);
+        }
+
+        [TestMethod]
+        public void TestMilesToMetres()
+        {
+            // 1 mile = 1609.34 metres
+            converter.FromUnit = "miles";
+            converter.ToUnit = "metres";
+            converter.FromDistance = 1;
+            converter.CalculateDistance();
+            double expected = 1609.34;
+            double actual = converter.ToDistance;
+            Assert.AreEqual(expected, actual, 0.01);
+        }
+
+        [TestMethod]
+        public void TestFeetToMetres()
+        {
+            // 1 foot = 0.3048 metres
+            converter.FromUnit = "feet";
+            converter.ToUnit = "metres";
+            converter.FromDistance = 1;
+            converter.CalculateDistance();
+            double expected = 0.3048;
+            double actual = converter.ToDistance;
+            Assert.AreEqual(expected, actual, 0.0001);
+        }
+
+        [TestMethod]
+        public void TestMetresToFeet()
+        {
+            // 1 metre = 3.28084 feet
+            converter.FromUnit = "metres";
+            converter.ToUnit = "feet";
+            converter.FromDistance = 1;
+            converter.CalculateDistance();
+            double expected = 3.28084;
+            double actual = converter.ToDistance;
+            Assert.AreEqual(expected, actual, 0.0001);
+        }
+
+        [TestMethod]
+        public void TestMetresToMiles()
+        {
+            // 1609.34 metres = 1 mile
+            converter.FromUnit = "metres";
+            converter.ToUnit = "miles";
+            converter.FromDistance = 1609.34;
+            converter.CalculateDistance();
+            double expected = 1;
+            double actual = converter.ToDistance;
+            Assert.AreEqual(expected, actual, 0.0001);
+        }
+
+        [TestMethod]
+        public void TestInputDistance()
+        {
+            // Test valid input
+            string prompt = "miles";
+            Console.SetIn(new System.IO.StringReader("5"));
+            double expected = 5;
+            double actual = converter.InputDistance(prompt);
+            Assert.AreEqual(expected, actual);
+
+            // Test invalid input
+            prompt = "metres";
+            Console.SetIn(new System.IO.StringReader("invalid input"));
+            Assert.ThrowsException<FormatException>(() => converter.InputDistance(prompt));
+        }
+
+        [TestMethod]
+        public void TestUnitMenu()
+        {
+            // Test valid input
+            Console.SetIn(new System.IO.StringReader("2"));
+            string expected = "Miles";
+            string actual = converter.UnitMenu();
+            Assert.AreEqual(expected, actual);
