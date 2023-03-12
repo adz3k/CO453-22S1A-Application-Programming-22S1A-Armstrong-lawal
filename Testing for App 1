@@ -111,3 +111,4 @@ namespace ConsoleApp.Tests
             string expected = "Miles";
             string actual = converter.UnitMenu();
             Assert.AreEqual(expected, actual);
+            
