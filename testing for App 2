@@ -1,0 +1,81 @@
+using System;
+using Xunit;
+using ConsoleAppProject.App02;
+
+namespace ConsoleAppProject.Tests
+{
+    public class BMITest
+    {
+        [Fact]
+        public void TestBMICalculationWithKGAndMetres()
+        {
+            // Arrange
+            BMI bmi = new BMI();
+            bmi.weightUnit = "KG";
+            bmi.heightUnit = "metres";
+            bmi.weight = 80;
+            bmi.height = 1.8;
+
+            // Act
+            double result = bmi.BMICalc();
+
+            // Assert
+            Assert.Equal(24.69, Math.Round(result, 2));
+            Assert.Equal("Normal weight", bmi.BMICategory);
+        }
+
+        [Fact]
+        public void TestBMICalculationWithStoneAndFeet()
+        {
+            // Arrange
+            BMI bmi = new BMI();
+            bmi.weightUnit = "stone";
+            bmi.heightUnit = "feet";
+            bmi.weight = 11;
+            bmi.height = 6;
+
+            // Act
+            double result = bmi.BMICalc();
+
+            // Assert
+            Assert.Equal(24.07, Math.Round(result, 2));
+            Assert.Equal("Normal weight", bmi.BMICategory);
+        }
+
+        [Fact]
+        public void TestBMICalculationWithKGAndFeet()
+        {
+            // Arrange
+            BMI bmi = new BMI();
+            bmi.weightUnit = "KG";
+            bmi.heightUnit = "feet";
+            bmi.weight = 80;
+            bmi.height = 5.9;
+
+            // Act
+            double result = bmi.BMICalc();
+
+            // Assert
+            Assert.Equal(25.54, Math.Round(result, 2));
+            Assert.Equal("Overweight", bmi.BMICategory);
+        }
+
+        [Fact]
+        public void TestBMICalculationWithStoneAndMetres()
+        {
+            // Arrange
+            BMI bmi = new BMI();
+            bmi.weightUnit = "stone";
+            bmi.heightUnit = "metres";
+            bmi.weight = 11;
+            bmi.height = 1.8;
+
+            // Act
+            double result = bmi.BMICalc();
+
+            // Assert
+            Assert.Equal(24.07, Math.Round(result, 2));
+            Assert.Equal("Normal weight", bmi.BMICategory);
+        }
+    }
+}
