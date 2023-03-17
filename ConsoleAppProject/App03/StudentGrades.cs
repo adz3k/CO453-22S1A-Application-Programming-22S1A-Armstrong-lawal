@@ -85,6 +85,9 @@ namespace ConsoleAppProject.App03
         {
 
             InputMarks();
+            CalculateStats();
+            CalculateGradeProfile();
+            OutputMarks();
 
         }
 
@@ -149,6 +152,35 @@ namespace ConsoleAppProject.App03
                 }
 
         }
+     public void Run()
+{
+    bool finished = false;
+    while (!finished)
+    {
+        Console.WriteLine("Select an option:");
+        Console.WriteLine("1. Input marks");
+        Console.WriteLine("2. Output marks");
+        Console.WriteLine("3. Exit");
+
+        string input = Console.ReadLine();
+
+        switch (input)
+        {
+            case "1":
+                InputMarks();
+                break;
+            case "2":
+                OutputMarks();
+                break;
+            case "3":
+                finished = true;
+                break;
+            default:
+                Console.WriteLine("Invalid option");
+                break;
+        }
+    }
+}
 
  
 
