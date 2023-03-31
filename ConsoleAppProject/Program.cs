@@ -1,6 +1,9 @@
+
+
 using ConsoleAppProject.App01;
 using ConsoleAppProject.App02;
 using ConsoleAppProject.App03;
+using ConsoleAppProject.App04;
 using ConsoleAppProject.Helpers;
 using System;
 
@@ -12,29 +15,60 @@ namespace ConsoleAppProject
     /// to start App01 to App05 for CO453 CW1
     /// 
     /// This Project has been modified by:
-    /// Derek Peacock 05/02/2022
+    /// Armstrong lawal 30/3/2023
     /// </summary>
     public static class Program
     {
+
         public static void Main(string[] args)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Magenta;
 
             Console.WriteLine();
             Console.WriteLine(" =================================================");
-            Console.WriteLine("    BNU CO453 Applications Programming 2022-2023! by Armstrong lawal ");
+            Console.WriteLine("    BNU CO453 Applications Programming 2022-2023! ");
+            Console.WriteLine("                     Armstrong Lawal                 ");
             Console.WriteLine(" =================================================");
             Console.WriteLine();
 
+            DistanceConverter converter = new DistanceConverter();
+            BMICalculator body = new BMICalculator();
+            StudentGrades grades = new StudentGrades();
+            PostUI social = new PostUI();
 
-            //DistanceConverter converter = new DistanceConverter();
-            //converter.Run();
+            Console.WriteLine(@"Please select application:
+            1. Distance Converter
+            2. BMI Calculator
+            3. Student Grades
+            4. Social Space");
+            int selection;
+            selection = Convert.ToInt32(Console.ReadLine());
+            switch (selection)
+            {
+                case 1:
+                    converter.Run();
+                    break;
+                case 2:
+                    body.Run();
+                    break;
+                case 3:
+                    grades.Run();
+                    break;
+                case 4:
+                    social.Run();
+                    break;
+            }
+            if (selection < 1 || selection > 4)
+            {
+                Console.WriteLine("Invalid selection, please enter 1 or 4");
+                Program.Main(args);
+                Console.WriteLine(@"Please select application:
+                1. Distance Converter
+                2. BMI Calculator
+                3. Grade Calculator
+                4. Social Space");
+            }
             
-            BMI con = new BMI();
-            con.Run();
-
-
         }
-       
     }
 }
