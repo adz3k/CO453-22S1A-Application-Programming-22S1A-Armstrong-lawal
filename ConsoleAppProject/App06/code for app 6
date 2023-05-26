@@ -1,0 +1,133 @@
+using System;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+
+namespace app;
+
+public class Game1 : Game
+{
+
+
+    private GraphicsDeviceManager _graphics;
+    private SpriteBatch _spriteBatch;
+    Texture2D bolderspaceSprite;
+    Texture2D aaaa;
+    Texture2D aaa;
+    SpriteFont gameFont;
+
+    Vector2 bolderspacePosition = new Vector2(150, 150);
+    const int bolderspaceRadius = 120;
+
+    Vector2 aaaPosition = Vector2.Zero;
+
+    MouseState mState;
+    bool mReleased = true;
+    int score = 0;
+
+    TimeSpan timer;
+    bool timerStarted = false;
+    const int timerDuration = 30; // 30 seconds
+
+    public Game1()
+    {
+        _graphics = new GraphicsDeviceManager(this);
+        Content.RootDirectory = "Content";
+        IsMouseVisible = true;
+    }
+
+    protected override void Initialize()
+    {
+        
+
+        base.Initialize();
+    }
+
+    protected override void LoadContent()
+    {
+        _spriteBatch = new SpriteBatch(GraphicsDevice);
+        bolderspaceSprite = Content.Load<Texture2D>("bolder space");
+        aaa = Content.Load<Texture2D>("aaa");
+        aaaa = Content.Load<Texture2D>("aaaa");
+        //gameFont = Content.Load<SpriteFont>("galleryFont");
+        // TODO: use this.Content to load your game content here
+    }
+
+    protected override void Update(GameTime gameTime)
+    {
+        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            Exit();
+        mState = Mouse.GetState();
+
+        mState = Mouse.GetState();
+        aaaPosition = new Vector2(mState.X, mState.Y);
+
+
+
+        if (!timerStarted)
+        {
+            timer = TimeSpan.Zero;
+            timerStarted = true;
+        }
+
+        timer += gameTime.ElapsedGameTime;
+
+        if (timer >= TimeSpan.FromSeconds(timerDuration))
+        {
+            // Timer reached 30 seconds
+            timerStarted = false;
+            ResetBolderspacePosition();
+            score = 0;
+        }
+
+        if (mState.LeftButton == ButtonState.Pressed && mReleased == true)
+        {
+            float mouseTargetDist = Vector2.Distance(bolderspacePosition, mState.Position.ToVector2());
+            if (mouseTargetDist < bolderspaceRadius)
+            {
+                score++;
+                Random rand = new Random();
+
+                bolderspacePosition.X = rand.Next(50, _graphics.PreferredBackBufferHeight);
+               bolderspacePosition.Y = rand.Next(50, _graphics.PreferredBackBufferHeight);
+            }
+            score++;
+            mReleased = false;
+        }
+
+        if (mState.LeftButton == ButtonState.Released)
+        {
+            mReleased = true;
+        }
+
+        // TODO: Add your update logic here
+
+        base.Update(gameTime);
+    }
+
+    private void ResetBolderspacePosition()
+    {
+        Random rand = new Random();
+        bolderspacePosition.X = rand.Next(50, _graphics.PreferredBackBufferWidth);
+        bolderspacePosition.Y = rand.Next(50, _graphics.PreferredBackBufferHeight);
+    }
+
+
+
+    protected override void Draw(GameTime gameTime)
+    {
+        GraphicsDevice.Clear(Color.CornflowerBlue);
+
+        _spriteBatch.Begin();
+        _spriteBatch.Draw(aaa, new Vector2(0, 0), Color.White);
+        _spriteBatch.Draw(aaaa, new Vector2(150, 300), Color.White);
+        _spriteBatch.Draw(bolderspaceSprite, bolderspacePosition, Color.White);
+        _spriteBatch.Draw(bolderspaceSprite, new Vector2(bolderspacePosition.X - bolderspaceRadius, bolderspacePosition.Y - bolderspaceRadius), Color.White);
+        _spriteBatch.End();
+
+        // TODO: Add your drawing code here
+
+        base.Draw(gameTime);
+    }
+}
+
