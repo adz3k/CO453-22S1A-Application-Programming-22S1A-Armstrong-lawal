@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 
 using ConsoleAppProject.Helpers;
 
- 
+
 
 namespace ConsoleAppProject.App03
 
@@ -26,7 +26,7 @@ namespace ConsoleAppProject.App03
 
         // Constants(GradeBoundaries)
 
- 
+
 
         public const int LowestMark = 0;
 
@@ -40,9 +40,8 @@ namespace ConsoleAppProject.App03
 
         public const int LowestGradeA = 70;
 
- 
 
-        //Properties
+
 
         public string[] Students { get; set; }
 
@@ -56,7 +55,7 @@ namespace ConsoleAppProject.App03
 
         public int Maximum { get; set; }
 
-        // Atrributes
+      
 
         public StudentGrades()
 
@@ -68,7 +67,7 @@ namespace ConsoleAppProject.App03
 
             "JJ","Shegz","Adz","Dj","Montell","Jamarli","Tayeshaun","Kane","Alicia","Shan"
 
- 
+
 
             };
 
@@ -76,7 +75,7 @@ namespace ConsoleAppProject.App03
 
             Marks = new int[Students.Length];
 
- 
+
 
         }
 
@@ -95,134 +94,171 @@ namespace ConsoleAppProject.App03
 
         {
 
-                for (int i = 0; i < Students.Length; i++)
+            for (int i = 0; i < Students.Length; i++)
+
+            {
+
+                Console.WriteLine($"Enter marks for {Students[i]}:");
+
+                int marks = int.Parse(Console.ReadLine());
+
+                Marks[i] = marks;
+
+
+
+                // Update grade profile
+
+                if (marks >= 90)
 
                 {
 
-                    Console.WriteLine($"Enter marks for {Students[i]}:");
-
-                    int marks = int.Parse(Console.ReadLine());
-
-                    Marks[i] = marks;
-
- 
-
-                    // Update grade profile
-
-                    if (marks >= 90)
-
-                    {
-
-                        GradeProfile[(int)Grades.A]++;
-
-                    }
-
-                    else if (marks >= 80)
-
-                    {
-
-                        GradeProfile[(int)Grades.B]++;
-
-                    }
-
-                    else if (marks >= 70)
-
-                    {
-
-                        GradeProfile[(int)Grades.C]++;
-
-                    }
-
-                    else if (marks >= 60)
-
-                    {
-
-                        GradeProfile[(int)Grades.D]++;
-
-                    }
-
-                    else
-
-                    {
-
-                        GradeProfile[(int)Grades.F]++;
-
-                    }
+                    GradeProfile[(int)Grades.A]++;
 
                 }
 
+                else if (marks >= 80)
+
+                {
+
+                    GradeProfile[(int)Grades.B]++;
+
+                }
+
+                else if (marks >= 70)
+
+                {
+
+                    GradeProfile[(int)Grades.C]++;
+
+                }
+
+                else if (marks >= 60)
+
+                {
+
+                    GradeProfile[(int)Grades.D]++;
+
+                }
+
+                else
+
+                {
+
+                    GradeProfile[(int)Grades.F]++;
+
+                }
+
+            }
+
         }
-     public void Run()
-{
-    bool finished = false;
-    while (!finished)
-    {
-        Console.WriteLine("Select an option:");
-        Console.WriteLine("1. Input marks");
-        Console.WriteLine("2. Output marks");
-        Console.WriteLine("3. Exit");
-
-        string input = Console.ReadLine();
-
-        switch (input)
+        public void start()
         {
-            case "1":
-                InputMarks();
-                break;
-            case "2":
-                OutputMarks();
-                break;
-            case "3":
-                finished = true;
-                break;
-            default:
-                Console.WriteLine("Invalid option");
-                break;
-        }
-    }
-}
+            bool finished = false;
+            while (!finished)
+            {
+                Console.WriteLine("Select an option:");
+                Console.WriteLine("1. Input marks");
+                Console.WriteLine("2. Output marks");
+                Console.WriteLine("3. Exit");
 
- 
+                string input = Console.ReadLine();
+
+                switch (input)
+                {
+                    case "1":
+                        InputMarks();
+                        break;
+                    case "2":
+                        OutputMarks();
+                        break;
+                    case "3":
+                        finished = true;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid option");
+                        break;
+                }
+            }
+        }
+
+
 
         public void OutputMarks()
-
         {
+            Console.WriteLine("Student Marks:");
+            for (int i = 0; i < Students.Length; i++)
+            {
+                Console.WriteLine($"{Students[i]} - Marks: {Marks[i]} - Grade: {ConvertToGrade(Marks[i])}");
+            }
 
-            throw new NotImplementedException();
-
+            Console.WriteLine($"Mean Mark: {Mean}%");
+            Console.WriteLine($"Minimum Mark: {Mininum}%");
+            Console.WriteLine($"Maximum Mark: {Maximum}%");
+            Console.WriteLine("Grade Profile:");
+            Console.WriteLine($"A: {GradeProfile[(int)Grades.A]}");
+            Console.WriteLine($"B: {GradeProfile[(int)Grades.B]}");
+            Console.WriteLine($"C: {GradeProfile[(int)Grades.C]}");
+            Console.WriteLine($"D: {GradeProfile[(int)Grades.D]}");
+            Console.WriteLine($"F: {GradeProfile[(int)Grades.F]}");
         }
 
-        public Grades ConvertToGrade(int mark)
-
-        {
-
-            throw new NotImplementedException();
-
-        }
 
         public void CalculateStats()
-
         {
-
             double total = 0;
+            Mininum = int.MaxValue; 
+            Maximum = int.MinValue; 
 
             foreach (int mark in Marks)
-
+            {
                 total += mark;
 
+                
+                if (mark < Mininum)
+                {
+                    Mininum = mark;
+                }
+                if (mark > Maximum)
+                {
+                    Maximum = mark;
+                }
+            }
+
             Mean = total / Marks.Length;
-
         }
 
-        public void ConvertToGrade()
 
+
+
+
+        public Grades ConvertToGrade(int mark)
         {
-
- 
-
+            if (mark >= LowestGradeA)
+            {
+                return Grades.A;
+            }
+            else if (mark >= LowestGradeB)
+            {
+                return Grades.B;
+            }
+            else if (mark >= LowestGradeC)
+            {
+                return Grades.C;
+            }
+            else if (mark >= LowestGradeD)
+            {
+                return Grades.D;
+            }
+            else
+            {
+                return Grades.F;
+            }
         }
 
- 
+          
+        
+
+
 
         public void CalculateGradeProfile()
 
@@ -236,11 +272,11 @@ namespace ConsoleAppProject.App03
 
             }
 
- 
+
 
             foreach (int mark in Marks)
 
- 
+
 
             {
 
