@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+using System;
 
 namespace ConsoleAppProject.App04
 {
@@ -9,18 +8,16 @@ namespace ConsoleAppProject.App04
     /// Other data, such as author and time, are also stored.
     ///</summary>
     /// <author>
-    /// Michael Kölling and David J. Barnes
+    /// Armstrong
     /// @version 0.1
     /// </author>
     public class PhotoPost : Post
     {
-
-
         // the name of the image file
-        public String Filename { get; set; }
+        public string Filename { get; }
 
         // a one line image caption
-        public String Caption { get; set; }
+        public string Caption { get; }
 
 
         ///<summary>
@@ -35,18 +32,17 @@ namespace ConsoleAppProject.App04
         /// <param name="filename">
         /// The filename of the image in this post.
         /// </param>
-        public PhotoPost(String author, String filename, String caption) : base(author)
+        public PhotoPost(string author, string filename, string caption) : base(author)
         {
-            this.Filename = filename;
-            this.Caption = caption;
-
+            Filename = filename;
+            Caption = caption;
         }
+
         public override void Display()
         {
-            Console.WriteLine($"    Filename:[{Filename}]");
-            Console.WriteLine($"    Caption:{Caption}");
+            Console.WriteLine($"    Filename: [{Filename}]");
+            Console.WriteLine($"    Caption: {Caption}");
             base.Display();
         }
-
     }
 }
